@@ -28,10 +28,11 @@
                             <th scope="col" class="column">Gender</th>
                             <th scope="col" class="column">Products</th>
                             <th scope="col" class="column">Brands</th>
-                            <th scope="col" class="column">Followup?</th>
+                            <th scope="col" class="column">Others</th>
                             <th scope="col" class="column">Willing for future survey</th>
                             <th scope="col" class="column">Customer Service rate</th>
                             <th scope="col" class="column">Problems they want to solve</th>
+                            <th scope="col" class="column">Date & time for data been stored</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
@@ -49,6 +50,7 @@
                             <td>{{ user.survey}}</td>
                             <td>{{ user.quality}}</td>
                             <td>{{ user.prob}}</td>
+                            <td>{{user.date_time}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -65,6 +67,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        
         <script>
         var app=new Vue({
             el:'#app',
