@@ -10,129 +10,132 @@
     </head>
     <body>
         <div id="app">
-            <div class="container mt-3">
-            <h1 style="text-align: center"><b>Client Survey</b></h1>
-            
-            <div class="card my-4" style="box-shadow: 0 2px 20px 1px rgba(0,0,0,0.1)">
-                <div class="card-body">
-                    <form id="surveyform">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="form-group ml-2">
-                                    <label for="FirstName" class="font-weight-bold">First Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="fn" placeholder="Enter your first name" required>
+            <div class="container mt-3" v-if="showThankYou == false">
+                <h1 style="text-align: center"><b>Client Survey</b></h1>
+                
+                <div class="card my-4" style="box-shadow: 0 2px 20px 1px rgba(0,0,0,0.1)">
+                    <div class="card-body">
+                        <form id="surveyform" @submit.prevents="saveData()">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group ml-2">
+                                        <label for="FirstName" class="font-weight-bold">First Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" v-model="first_name" name="fn" placeholder="Enter your first name" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group ml-2">
+                                        <label for="Lastname" class="font-weight-bold">Last Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" v-model="last_name" name="ln" placeholder="Enter your last name">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group ml-2">
-                                    <label for="Lastname" class="font-weight-bold">Last Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="ln" placeholder="Enter your last name">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group ml-2 error-icon">
+                                        <label for="Email1" class=" control-label font-weight-bold">Email address <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control"  v-model="email" id="email" placeholder="eg: youremail@gmail.com">
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-group ml-2">
+                                        <label for="Contact" class="font-weight-bold"><span class="text-danger">*</span>Contact No:</label>
+                                        <input type="tel" pattern=".{10}" class="form-control" v-model="contact_number" id="contact" placeholder="Enter your phone number" required><br>
+                                    </div>
+                                </div>
+                                    
+                                <div class="col-12 col-sm-12 col-md-4">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Date of Birth <span class="text-danger">*</span></label>
+                                        <input type="date" id="dob" v-model="dob" class="form-control" name="Date">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4">
-                                <div class="form-group ml-2 error-icon">
-                                    <label for="Email1" class=" control-label font-weight-bold">Email address <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="email" placeholder="eg: youremail@gmail.com">
-                                </div>
-                            </div>
-                        
-                            <div class="col-12 col-sm-6 col-md-4">
-                                <div class="form-group ml-2">
-                                    <label for="Contact" class="font-weight-bold"><span class="text-danger">*</span>Contact No:</label>
-                                    <input type="tel" pattern=".{10}" class="form-control" id="contact" placeholder="Enter your phone number" required><br>
-                                </div>
+                
+                            <div class="radio">
+                                <label class="font-weight-bold">Gender <span class="text-danger">*</span></label>              
+                                <label class="radio-inline mx-2"><input type="radio" class="mr-2" value="Male" v-model="gender" name="optradio" required>Male</label>
+                                <label class="radio-inline mx-2"><input type="radio" class="mr-2" value="Female" v-model="gender" name="optradio" required>Female</label>
+                                <label class="radio-inline mx-2"><input type="radio" class="mr-2" value="Other" v-model="gender" name="optradio" required>Others</label>
                             </div>
                                 
-                            <div class="col-12 col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <label class="font-weight-bold">Date of Birth <span class="text-danger">*</span></label>
-                                    <input type="date" id="dob" class="form-control" name="Date">
-                                </div>
-                            </div>
-                        </div>
-            
-                        <div class="radio">
-                            <label class="font-weight-bold">Gender <span class="text-danger">*</span></label>              
-                            <label class="radio-inline mx-2"><input type="radio"  class="mr-2" name="optradio" required>Male</label>
-                            <label class="radio-inline mx-2"><input type="radio" class="mr-2" name="optradio" required>Female</label>
-                            <label class="radio-inline mx-2"><input type="radio" class="mr-2" name="optradio" required>Others</label>
-                        </div>
+
+
                             
-
-
-                        
-                    </select>
-                        </div>
-                        
-                        <div class="form-group ml-4 mr-4">
-                            <label class="form-label font-weight-bold">What are you using this product for?</label>
-                            <select name="product" class="form-control" v-model="product_use">
-                                <option value="" selected disabled>Select</option>
-                                <option value="business">Business</option>
-                                <option value="personal_use">Personal use</option>
-                                <option value="both">Both  business and Personal use</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <input type="text" class="form-control" placeholder="If other, please specify" v-if="product_use == 'other'">
-                        </div>
-
-                        <div class="form-group ml-4 mr-4">
-                                <label class="form-label font-weight-bold">Which brands have you heard of?</label>
-                                <input type="checkbox" id="Apple" value="Apple" v-model="brands">
-                                <label for="Apple">Apple</label>
-                                <input type="checkbox" id="Xiaomi" value="Xiaomi" v-model="brands">
-                                <label for="Xiaomi">Xiaomi</label>
-                                <input type="checkbox" id="Huawei" value="Huawei" v-model="brands">
-                                <label for="Huawei">Huawei</label>
-                                <input type="checkbox" id="Samsung" value="Samsung" v-model="brands">
-                                <label for="Samsung">Samsung</label>
-                                <input type="checkbox" id="Others" value="Others" v-model="brands">
-                                <label for="Others">Others</label><br>
-                                <input type="text" v-if="brands.includes('Others')" class="form-control"  placeholder="If other, please secify">
-                        </div>
-                    
-                        <div class="form-group ml-4 mr-4">
-                            <label class="form-label font-weight-bold">May we contact you to follow up on these responses?</label>
-                            <select name="responses" class="form-control">
-                                <option value="" selected disabled>Select</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group ml-4 mr-4">
-                            <label class="form-label font-weight-bold">In the future, would you be willing to take this survey again?</label>
-                            <select name="age" class="form-control">
+                        </select>
+                            </div>
+                            
+                            <div class="form-group ml-4 mr-4">
+                                <label class="form-label font-weight-bold">What are you using this product for?</label>
+                                <select name="product" class="form-control" v-model="product_use">
                                     <option value="" selected disabled>Select</option>
-                                <option value="18_25">Yes</option>
-                                <option value="16_35">No</option>
-                            </select>
-                        </div>
+                                    <option value="business">Business</option>
+                                    <option value="personal_use">Personal use</option>
+                                    <option value="both">Both  business and Personal use</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <input type="text" class="form-control" placeholder="If other, please specify" v-if="product_use == 'other'">
+                            </div>
+
+                            <div class="form-group ml-4 mr-4">
+                                    <label class="form-label font-weight-bold">Which brands have you heard of?</label>
+                                    <input type="checkbox" id="Apple" value="Apple" v-model="brands">
+                                    <label for="Apple">Apple</label>
+                                    <input type="checkbox" id="Xiaomi" value="Xiaomi" v-model="brands">
+                                    <label for="Xiaomi">Xiaomi</label>
+                                    <input type="checkbox" id="Huawei" value="Huawei" v-model="brands">
+                                    <label for="Huawei">Huawei</label>
+                                    <input type="checkbox" id="Samsung" value="Samsung" v-model="brands">
+                                    <label for="Samsung">Samsung</label>
+                                    <input type="checkbox" id="Others" value="Others" v-model="brands">
+                                    <label for="Others">Others</label><br>
+                                    <input type="text" v-if="brands.includes('Others')" v-model="otherBrands" class="form-control"  placeholder="If other, please secify">
+                            </div>
                         
-                        <div class="form-group ml-4 mr-4">
-                            <label class="form-label font-weight-bold">Overall, how would you rate the quality of your customer service experience?</label>
-                            <select name="quality" class="form-control">
-                                <option value="" selected disabled>Select</option>
-                                <option value="Positive">Positive</option>
-                                <option value="Neagtive">Negative</option>
-                                <option value="Somewhat Positive">Somewhat Positive</option>
-                                <option value="Somewhat Negative">Somewhat Negative</option>
-                                <option value="Neutral">Neutral</option>
-                            </select>
-                        </div>
-                        <div class="form-group mt-4 ml-4 mr-4">
-                            <label class="font-weight-bold" >What problem would you like to solve with our product?</label>
-                            <textarea class="form-control" name="prob" class="pl-2" rows="5"></textarea>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" style="margin-bottom:10px" class="btn btn-success"> 
-                                Submit
-                            </button> 
-                        </div> 
-                    </form>
+                            <div class="form-group ml-4 mr-4">
+                                <label class="form-label font-weight-bold">May we contact you to follow up on these responses?</label>
+                                <select name="responses" class="form-control" v-model="response">
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group ml-4 mr-4">
+                                <label class="form-label font-weight-bold">In the future, would you be willing to take this survey again?</label>
+                                <select name="age" class="form-control" v-model="survey">
+                                        <option value="" selected disabled>Select</option>
+                                    <option value="18_25">Yes</option>
+                                    <option value="16_35">No</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group ml-4 mr-4">
+                                <label class="form-label font-weight-bold">Overall, how would you rate the quality of your customer service experience?</label>
+                                <select name="quality" class="form-control" v-model="quality">
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="Positive">Positive</option>
+                                    <option value="Neagtive">Negative</option>
+                                    <option value="Somewhat Positive">Somewhat Positive</option>
+                                    <option value="Somewhat Negative">Somewhat Negative</option>
+                                    <option value="Neutral">Neutral</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-4 ml-4 mr-4">
+                                <label class="font-weight-bold" >What problem would you like to solve with our product?</label>
+                                <textarea class="form-control" name="prob" class="pl-2" rows="5" v-model="prob"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" style="margin-bottom:10px" class="btn btn-success" @click="saveData()"> 
+                                    Submit
+                                </button> 
+                            </div> 
+                        </form>
                 </div>
+            </div>
+            <div class="container mt-3 font-weight-bold" style="text-align:center; color: green; font-style: italic; font-size: 30px"v-if="showThankYou == true">
+                Your response has been submitted, Thank You!
             </div>
         </div>
 
@@ -145,8 +148,49 @@
             var app = new Vue({
                 el: '#app',
                 data: {
+                    product_use: null,
+                    brands: [],
+                    otherBrands: null,
+                    first_name: null,
+                    last_name: null,
+                    email: null,
+                    contact_number: null,
+                    dob: null,
+                    gender: '',
                     product_use: '',
-                    brands: []
+                    contact: '',
+                    survey: '',
+                    quality: '',
+                    prob: null,
+                    showThankYou: false
+                },
+                methods: {
+                    saveData() {
+                        let user = {
+                            first_name: this.first_name,
+                            last_name: this.last_name,
+                            email: this.email,
+                            contact_number: this.contact_number,
+                            dob: this.dob,
+                            gender: this.gender,
+                            product_use: this.product_use,
+                            brands: this.brands,
+                            otherBrands: this.otherBrands,
+                            response: this.response,
+                            survey: this.survey,
+                            quality: this.quality,
+                            prob: this.prob
+                        }
+                        let users = localStorage.getItem('users')
+                        if(users){
+                            users = JSON.parse(users)
+                        }else {
+                            users = []
+                        }
+                        users.push(user)
+                        localStorage.setItem('users', JSON.stringify(users))
+                        this.showThankYou = true
+                    }
                 }
             })
         </script>
